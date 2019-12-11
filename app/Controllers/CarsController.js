@@ -1,28 +1,16 @@
-import _carService from '../Services/CarService.js'
-import _store from '../store.js'
+import carService from '../Services/CarService.js'
+import store from '../store.js'
 
-// element to inject into
-// cars data from the state
-// turn car data into an element and store in template
 function _drawCars() {
-  let template = ''
-  let cars = _store.State.cars
-  cars.forEach((car, i) => template += car.getTemplate(i))
-  //NOTE Same thing
-  // cars.forEach(function (car, i) { template += car.getTemplate()})
-
-  //NOTE same as foreach
-  // for (let i = 0; i < cars.length; i++) {
-  //   const car = cars[i];
-  //   template += car.getTemplate()
-  // }
-
-  document.querySelector("#cars").innerHTML = template
+  let template = "";
+  let cars = store.State.cars;
+  cars.forEach(c => template += c.Template);
+  document.getElementById("inventory").innerHTML = template
 }
 
 export default class CarsController {
   constructor() {
-    console.log("Hello from car controller")
+    store.subscribe("cars", _drawCars)
     _drawCars()
   }
 
@@ -36,7 +24,7 @@ export default class CarsController {
       price: formData.price.value
     }
 
-    _carService.addCar(newCar)
+    carService.addCar(newCar)
     _drawCars()
     formData.reset()
 
@@ -44,8 +32,8 @@ export default class CarsController {
   }
 
   delortCar(carIndex) {
-    _carService.delortCar(carIndex)
+    carService.delortCar(carIndex)
     _drawCars()
+    showForm()
   }
-
 }

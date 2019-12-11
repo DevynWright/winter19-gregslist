@@ -20,6 +20,6 @@ class CarService {
   }
 }
 
-const CARSERVICE = new CarService()
+const carService = new CarService()
 
-export default CARSERVICE 
+export default carService 
